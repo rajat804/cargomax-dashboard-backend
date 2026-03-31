@@ -57,7 +57,7 @@ app.use(express.json());
 /* ==============================
    ROUTES
 ============================== */
-app.use("/api/warehouses", warehouseRoutes)
+app.use("/api/warehouses", warehouseRoutes);
 app.use('/api/vendors', vendorRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/managers', managerRoutes);
