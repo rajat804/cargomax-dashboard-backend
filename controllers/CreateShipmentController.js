@@ -126,7 +126,7 @@ export const updateShipment = async (req, res) => {
     const updatedShipment = await CreateShipment.findByIdAndUpdate(
       req.params.id,
       { ...req.body, updatedAt: Date.now() },
-      { new: true, runValidators: true }
+      {  returnDocument: "after" , runValidators: true }
     );
 
     res.status(200).json({
