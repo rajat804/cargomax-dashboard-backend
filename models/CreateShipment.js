@@ -5,11 +5,11 @@ const addressSchema = new mongoose.Schema({
   company: { type: String, required: true, trim: true },
   contactName: { type: String, required: true, trim: true },
   address1: { type: String, required: true, trim: true },
-  address2: { type: String, trim: true },
+  address2: { type: String, trim: true, default: "" },
   city: { type: String, required: true, trim: true },
   state: { type: String, required: true, trim: true },
   zipCode: { type: String, required: true, trim: true },
-  country: { type: String, required: true, default: "US", trim: true },
+  country: { type: String, required: true, default: "IN", trim: true },
   phone: { type: String, required: true, trim: true },
   email: { type: String, required: true, lowercase: true, trim: true },
 });
@@ -24,7 +24,7 @@ const shipmentItemSchema = new mongoose.Schema({
   description: { type: String, required: true, trim: true },
   quantity: { type: Number, required: true, min: 1, default: 1 },
   weight: { type: Number, required: true, min: 0, default: 0 },
-  dimensions: { type: itemDimensionsSchema, required: true },
+  dimensions: { type: itemDimensionsSchema, required: true, default: () => ({ length: 0, width: 0, height: 0 }) },
   value: { type: Number, required: true, min: 0, default: 0 },
   category: {
     type: String,
@@ -54,13 +54,21 @@ const createShipmentSchema = new mongoose.Schema(
     originAddress: { type: addressSchema, required: true },
     destinationAddress: { type: addressSchema, required: true },
     items: { type: [shipmentItemSchema], default: [] },
-    specialInstructions: { type: String, trim: true },
+    specialInstructions: { type: String, trim: true, default: "" },
     insuranceRequired: { type: Boolean, default: false },
     signatureRequired: { type: Boolean, default: false },
     temperatureControlled: { type: Boolean, default: false },
     fragile: { type: Boolean, default: false },
-    carrier: { type: String, enum: ["fedex", "ups", "dhl", "usps", "cargomax"] },
-    service: { type: String, enum: ["ground", "air", "express", "overnight", "same-day"] },
+    carrier: { 
+      type: String, 
+      enum: ["bluedart", "delhivery", "dtdc", "fedex", "dhl", "xpressbees", "cargomax"], 
+      default: "cargomax" 
+    },
+    service: { 
+      type: String, 
+      enum: ["ground", "air", "express", "overnight", "same-day"],
+      default: "ground"
+    },
     estimatedCost: { type: Number, required: true, min: 0 },
     status: {
       type: String,
