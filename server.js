@@ -10,6 +10,8 @@ import shipmentRoutes from "./routes/shipmentRoutes.js";
 import managerRoutes from "./routes/managerRoutes.js";
 import createShipmentRoutes from "./routes/createShipmentRoutes.js";
 import inventoryRoutes from "./routes/inventoryRoutes.js";
+import restockRoutes from "./routes/restockRoutes.js";
+import vendorDirectoryRoutes from "./routes/vendorDirectoryRoutes.js";
 import { promises as dns } from "dns";
 dns.setServers(["8.8.8.8", "1.1.1.1"]);
 
@@ -62,9 +64,14 @@ app.use(express.json());
 app.use("/api/warehouses", warehouseRoutes);
 app.use("/api/inventory", inventoryRoutes);
 app.use('/api/vendors', vendorRoutes);
+app.use("/api/vendor-directory", vendorDirectoryRoutes);
 app.use('/api/shipments', shipmentRoutes);
 app.use('/api/createshipments', createShipmentRoutes);
 app.use('/api/managers', managerRoutes);
+app.use("/api/restock", restockRoutes);
+
+
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', message: 'Server is running' });
 });
